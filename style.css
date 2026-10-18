@@ -1,0 +1,15 @@
+:root { --ink: #5c4054; --paper: #fff4f8; --pink: #e86a9a; --lilac: #8f74e0; --muted: #8a7383; --card: #ffffff; }
+@media (prefers-color-scheme: dark) { :root { --ink: #f3e6ee; --paper: #221a25; --pink: #ff9cc2; --lilac: #b9a6ff; --muted: #b8a6b4; --card: #2d2431; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.75 "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 2.2em; margin: 0 0 4px; }
+h1 .b { color: var(--pink); }
+h1 .r { color: var(--lilac); }
+h1 small { display: block; font-size: .42em; color: var(--muted); font-weight: normal; }
+h2 { border-top: 2px dotted var(--muted); padding-top: 20px; margin-top: 36px; }
+section { background: var(--card); border-radius: 18px; padding: 4px 20px 12px; margin: 20px 0; }
+a { color: var(--pink); }
+nav { margin: 12px 0 24px; display: flex; gap: 14px; flex-wrap: wrap; }
+.muted { color: var(--muted); font-size: .9em; }
+ul { padding-left: 1.2em; }
