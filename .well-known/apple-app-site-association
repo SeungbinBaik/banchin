@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["3HZCBVD9P6.com.seungbin.banchin"],
+        "components": [
+          { "/": "/r", "comment": "자랑하기 도전장" },
+          { "/": "/r/*", "comment": "자랑하기 도전장" }
+        ]
+      }
+    ]
+  }
+}

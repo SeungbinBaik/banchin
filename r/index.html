@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>친구의 도전장 · 반짝 친구들</title>
+<meta name="description" content="잠든 별을 지키는 귀여운 협동 게임, 반짝 친구들. 친구가 세운 기록에 도전해 보세요.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="친구가 보낸 도전장! · 반짝 친구들">
+<meta property="og:description" content="잠든 별을 지키는 귀여운 협동 게임. 친구 기록에 도전해 볼래요?">
+<meta property="og:image" content="https://banchin.edureserve.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* 자랑하기 링크 안내 페이지 — 앱이 있으면 앱으로(유니버설 링크·앱 링크가 먼저 가로챈다), 없으면 기기에 맞는 스토어로 */
+  .hero { width: 100%; max-width: 420px; display: block; margin: 0 auto; border-radius: 22px; }
+  .card { background: var(--card); border-radius: 22px; padding: 22px 20px; margin: 18px 0; text-align: center; }
+  .score { font-size: 2.6em; font-weight: 800; margin: 4px 0; }
+  .score .star { color: #f5b82e; }
+  .sub { color: var(--muted); margin: 0; }
+  .btn { display: block; margin: 12px auto; max-width: 360px; padding: 15px 18px; border-radius: 999px; color: #fff; font-weight: 700; text-decoration: none; font-size: 1.08em; }
+  .btn.app { background: var(--pink); }
+  .btn.ios { background: #6f5bd6; }
+  .btn.android { background: #3f9d78; }
+  .hide { display: none; }
+  h1 { text-align: center; }
+</style>
+</head>
+<body>
+<main>
+<h1><span class="b">반</span>짝 <span class="b">친</span><span class="r">구들</span><small>친구가 보낸 도전장</small></h1>
+<img class="hero" src="../img/og.png" alt="반짝 친구들의 여섯 친구: 토끼, 양, 강아지, 고양이, 햄스터, 펭귄">
+
+<div class="card">
+  <p class="sub" id="lead">친구가 이만큼 별을 지켰어요!</p>
+  <p class="score"><span class="star">★</span> <span id="score">—</span></p>
+  <p class="sub" id="wave"></p>
+  <p>이 기록을 넘어 볼래요?</p>
+  <a class="btn app hide" id="open">앱에서 도전하기</a>
+  <a class="btn ios hide" id="ios" href="https://apps.apple.com/kr/app/id6824316058">App Store에서 받기</a>
+  <a class="btn android hide" id="android" href="https://play.google.com/store/apps/details?id=com.seungbin.banchin&amp;referrer=utm_source%3Dbrag%26utm_medium%3Dshare%26utm_campaign%3Drecord">Google Play에서 받기</a>
+  <p class="muted" id="hint">앱이 있으면 "앱에서 도전하기", 없으면 스토어에서 받아 주세요.</p>
+</div>
+
+<section>
+<p>잠든 별을 지키는 귀여운 협동 게임이에요. 길을 따라 오는 장난꾸러기들을 반짝 빛으로 정화해 친구로 만들어요. 혼자(AI 친구와) 놀거나, 같은 방 친구와 인터넷 없이 같이 놀 수 있어요. 광고와 채팅은 없어요.</p>
+<p class="muted">A cute co-op game about keeping a sleeping star safe. Your friend challenged you to beat their score!</p>
+</section>
+<p class="muted"><a href="../">지원</a> · <a href="../privacy.html">개인정보 처리방침</a></p>
+</main>
+<script>
+  // 링크의 숫자만 읽는다 (이름·기기 정보는 링크에 없다). 범위를 벗어나면 보여 주지 않는다.
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var s = parseInt(q.get("s") || "", 10);
+    var w = parseInt(q.get("w") || "", 10);
+    if (s >= 0 && s <= 9999999) document.getElementById("score").textContent = s.toLocaleString("ko-KR") + "점";
+    if (w >= 1 && w <= 999) document.getElementById("wave").textContent = w + "웨이브까지";
+    var ua = navigator.userAgent || "";
+    var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    var android = /Android/.test(ua);
+    var play = document.getElementById("android").href;
+    var query = location.search.replace(/^\?/, "");
+    var open = document.getElementById("open");
+    // 카카오톡 같은 앱 안 브라우저는 유니버설 링크·앱 링크로 앱을 열지 않는다 → 직접 연다
+    if (ios) {
+      open.href = "banchin://r?" + query;
+      open.classList.remove("hide");
+      document.getElementById("ios").classList.remove("hide");
+    } else if (android) {
+      open.href = "intent://r?" + query + "#Intent;scheme=banchin;package=com.seungbin.banchin;S.browser_fallback_url=" + encodeURIComponent(play) + ";end";
+      open.classList.remove("hide");
+      document.getElementById("android").classList.remove("hide");
+    } else {
+      document.getElementById("ios").classList.remove("hide");
+      document.getElementById("android").classList.remove("hide");
+      document.getElementById("hint").textContent = "휴대폰에서 받아 주세요.";
+    }
+  })();
+</script>
+</body>
+</html>

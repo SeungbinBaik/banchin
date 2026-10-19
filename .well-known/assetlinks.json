@@ -1,0 +1,14 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.seungbin.banchin",
+      "sha256_cert_fingerprints": [
+        "D0:75:9D:B3:A6:25:17:21:86:70:1A:E3:0E:E7:9A:A1:FD:B4:06:83:27:6F:E5:EE:EA:5E:23:03:44:F4:BB:E5",
+        "B9:83:6D:F2:ED:88:6D:8E:AF:AA:70:DF:0E:FE:BE:FB:A3:12:8F:19:A8:FC:A0:66:E8:78:8D:ED:54:D8:06:4F",
+        "B9:E5:79:D3:53:63:20:8C:87:E3:AD:23:80:F7:0C:9B:F1:A4:8D:86:00:1D:A3:70:A2:6A:89:B3:21:86:F2:2F"
+      ]
+    }
+  }
+]
