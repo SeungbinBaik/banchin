@@ -30,37 +30,68 @@
 </head>
 <body>
 <main>
-<h1><span class="b">반</span>짝 <span class="b">친</span><span class="r">구들</span><small>친구가 보낸 도전장</small></h1>
-<img class="hero" src="../img/og.png" alt="반짝 친구들의 여섯 친구: 토끼, 양, 강아지, 고양이, 햄스터, 펭귄">
+<h1><span id="logo"><span class="b">반</span>짝 <span class="b">친</span><span class="r">구들</span></span><small id="sub">친구가 보낸 도전장</small></h1>
+<img class="hero" id="hero" src="../img/og.png" alt="반짝 친구들의 여섯 친구: 토끼, 양, 강아지, 고양이, 햄스터, 펭귄">
 
 <div class="card">
   <p class="sub" id="lead">친구가 이만큼 별을 지켰어요!</p>
   <p class="score"><span class="star">★</span> <span id="score">—</span></p>
   <p class="sub" id="wave"></p>
-  <p>이 기록을 넘어 볼래요?</p>
+  <p id="ask">이 기록을 넘어 볼래요?</p>
   <!-- 단추 하나: 앱이 있으면 앱으로, 없으면 이 기기의 스토어로 (아래 스크립트) -->
   <a class="btn app" id="go" href="#">도전하기</a>
   <p class="muted hide" id="have"><a id="have-link" href="#">앱이 이미 있다면 여기를 눌러요</a></p>
   <!-- 컴퓨터에서 열었을 때만 -->
-  <a class="btn ios hide" id="ios" href="https://apps.apple.com/kr/app/id6824316058">App Store</a>
+  <a class="btn ios hide" id="ios" href="https://apps.apple.com/app/id6824316058">App Store</a>
   <a class="btn android hide" id="android" href="https://play.google.com/store/apps/details?id=com.seungbin.banchin&amp;referrer=utm_source%3Dbrag%26utm_medium%3Dshare%26utm_campaign%3Drecord">Google Play</a>
   <p class="muted hide" id="pc">휴대폰에서 이 링크를 열어 주세요.</p>
 </div>
 
 <section>
-<p>잠든 별을 지키는 귀여운 협동 게임이에요. 길을 따라 오는 장난꾸러기들을 반짝 빛으로 정화해 친구로 만들어요. 혼자(AI 친구와) 놀거나, 같은 방 친구와 인터넷 없이 같이 놀 수 있어요. 광고와 채팅은 없어요.</p>
-<p class="muted">A cute co-op game about keeping a sleeping star safe. Your friend challenged you to beat their score!</p>
+<p id="about">잠든 별을 지키는 귀여운 협동 게임이에요. 길을 따라 오는 장난꾸러기들을 반짝 빛으로 정화해 친구로 만들어요. 혼자(AI 친구와) 놀거나, 같은 방 친구와 인터넷 없이 같이 놀 수 있어요. 광고와 채팅은 없어요.</p>
+<p class="muted" id="about-en">A cute co-op game about keeping a sleeping star safe. Your friend challenged you to beat their score!</p>
 </section>
-<p class="muted"><a href="../">지원</a> · <a href="../privacy.html">개인정보 처리방침</a></p>
+<p class="muted"><a href="../" id="support">지원</a> · <a href="../privacy.html" id="privacy">개인정보 처리방침</a></p>
 </main>
 <script>
   // 링크의 숫자만 읽는다 (이름·기기 정보는 링크에 없다). 범위를 벗어나면 보여 주지 않는다.
   (function () {
+    // 글은 브라우저 언어로 (게임과 같은 넷: 한국어·영어·일본어·번체, 그 밖은 영어). HTML 기본은 한국어
+    var nav = (navigator.language || "ko").toLowerCase();
+    var lang = /^ko/.test(nav) ? "ko" : /^ja/.test(nav) ? "ja" : /^zh/.test(nav) ? "zh" : "en";
+    var T = {
+      ko: { locale: "ko-KR", pts: "{n}점", wave: "{w}웨이브까지" },
+      en: { locale: "en-US", title: "A friend's challenge · Sparkle Friends", logo: '<span class="b">S</span>parkle <span class="b">F</span><span class="r">riends</span>',
+            sub: "A challenge from a friend", lead: "Your friend protected the star this well!", pts: "{n} pts", wave: "Up to wave {w}",
+            ask: "Can you beat this score?", go: "Take the challenge", have: "Already have the app? Tap here", pc: "Please open this link on your phone.",
+            about: "A cute co-op game about protecting a sleeping star. Shine sparkling light on the pranksters walking along the roads and turn them into friends. Play alone with an AI buddy, or with a friend in the same room — no internet needed. No ads, no chat.",
+            support: "Support", privacy: "Privacy Policy", alt: "The six Sparkle Friends: bunny, lamb, puppy, kitty, hamster and penguin" },
+      ja: { locale: "ja-JP", title: "ちょうせんじょう · キラキラともだち", logo: '<span class="b">キラ</span>キラ<span class="b">とも</span><span class="r">だち</span>',
+            sub: "ともだちからの ちょうせんじょう", lead: "ともだちが ここまで ほしを まもったよ！", pts: "{n}てん", wave: "{w}ウェーブまで",
+            ask: "この きろくを こえられるかな？", go: "ちょうせんする", have: "アプリが もう ある ときは ここを おしてね", pc: "スマホで このリンクを ひらいてね。",
+            about: "眠っている星を守る、かわいい協力ゲームです。道を歩いてくるいたずらっこたちをキラキラの光で照らして、ともだちにします。ひとりで(AIのともだちと)遊ぶことも、同じ部屋の友だちとインターネットなしで一緒に遊ぶこともできます。広告やチャットはありません。",
+            support: "サポート", privacy: "プライバシーポリシー", alt: "キラキラともだちの 6にん: うさぎ、ひつじ、いぬ、ねこ、ハムスター、ペンギン" },
+      zh: { locale: "zh-TW", title: "朋友的挑戰書 · 閃亮好朋友", logo: '<span class="b">閃</span>亮好朋<span class="b">友</span>',
+            sub: "朋友寄來的挑戰書", lead: "朋友守護了這麼久的星星！", pts: "{n}分", wave: "到第{w}波",
+            ask: "能超越這個紀錄嗎？", go: "接受挑戰", have: "已經有 App 了嗎？請點這裡", pc: "請用手機打開這個連結。",
+            about: "守護沉睡星星的可愛合作遊戲。用閃亮的光照亮沿著道路走來的搗蛋鬼，把他們變成好朋友。可以自己玩（和 AI 朋友一起），也可以和同一個房間的朋友不用網路一起玩。沒有廣告，也沒有聊天。",
+            support: "支援", privacy: "隱私權政策", alt: "閃亮好朋友的六位朋友：兔子、綿羊、小狗、小貓、倉鼠和企鵝" }
+    }[lang];
+    if (lang !== "ko") {
+      document.documentElement.lang = lang === "zh" ? "zh-Hant" : lang;
+      document.title = T.title;
+      document.getElementById("logo").innerHTML = T.logo; // 고정 글만 (링크의 값은 넣지 않는다)
+      ["sub", "lead", "ask", "go", "have-link", "pc", "about", "support", "privacy"].forEach(function (id) {
+        document.getElementById(id).textContent = T[id === "have-link" ? "have" : id];
+      });
+      document.getElementById("hero").alt = T.alt;
+      document.getElementById("about-en").classList.add("hide");
+    }
     var q = new URLSearchParams(location.search);
     var s = parseInt(q.get("s") || "", 10);
     var w = parseInt(q.get("w") || "", 10);
-    if (s >= 0 && s <= 9999999) document.getElementById("score").textContent = s.toLocaleString("ko-KR") + "점";
-    if (w >= 1 && w <= 999) document.getElementById("wave").textContent = w + "웨이브까지";
+    if (s >= 0 && s <= 9999999) document.getElementById("score").textContent = T.pts.replace("{n}", s.toLocaleString(T.locale));
+    if (w >= 1 && w <= 999) document.getElementById("wave").textContent = T.wave.replace("{w}", w);
     // 기기는 브라우저가 알려 주는 User-Agent로 안다. 앱이 깔렸는지는 웹이 알 수 없다(iOS) → 앱을 먼저 열어 보고 안 되면 스토어로.
     var ua = navigator.userAgent || "";
     var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
