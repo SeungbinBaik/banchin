@@ -38,10 +38,13 @@
   <p class="score"><span class="star">★</span> <span id="score">—</span></p>
   <p class="sub" id="wave"></p>
   <p>이 기록을 넘어 볼래요?</p>
-  <a class="btn app hide" id="open">앱에서 도전하기</a>
-  <a class="btn ios hide" id="ios" href="https://apps.apple.com/kr/app/id6824316058">App Store에서 받기</a>
-  <a class="btn android hide" id="android" href="https://play.google.com/store/apps/details?id=com.seungbin.banchin&amp;referrer=utm_source%3Dbrag%26utm_medium%3Dshare%26utm_campaign%3Drecord">Google Play에서 받기</a>
-  <p class="muted" id="hint">앱이 있으면 "앱에서 도전하기", 없으면 스토어에서 받아 주세요.</p>
+  <!-- 단추 하나: 앱이 있으면 앱으로, 없으면 이 기기의 스토어로 (아래 스크립트) -->
+  <a class="btn app" id="go" href="#">도전하기</a>
+  <p class="muted hide" id="have"><a id="have-link" href="#">앱이 이미 있다면 여기를 눌러요</a></p>
+  <!-- 컴퓨터에서 열었을 때만 -->
+  <a class="btn ios hide" id="ios" href="https://apps.apple.com/kr/app/id6824316058">App Store</a>
+  <a class="btn android hide" id="android" href="https://play.google.com/store/apps/details?id=com.seungbin.banchin&amp;referrer=utm_source%3Dbrag%26utm_medium%3Dshare%26utm_campaign%3Drecord">Google Play</a>
+  <p class="muted hide" id="pc">휴대폰에서 이 링크를 열어 주세요.</p>
 </div>
 
 <section>
@@ -58,25 +61,39 @@
     var w = parseInt(q.get("w") || "", 10);
     if (s >= 0 && s <= 9999999) document.getElementById("score").textContent = s.toLocaleString("ko-KR") + "점";
     if (w >= 1 && w <= 999) document.getElementById("wave").textContent = w + "웨이브까지";
+    // 기기는 브라우저가 알려 주는 User-Agent로 안다. 앱이 깔렸는지는 웹이 알 수 없다(iOS) → 앱을 먼저 열어 보고 안 되면 스토어로.
     var ua = navigator.userAgent || "";
     var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
     var android = /Android/.test(ua);
+    // 앱 안 브라우저(카카오톡·네이버·인스타그램·페이스북·라인·다음): 유니버설 링크로 앱을 열지 않는다
+    var inApp = /KAKAOTALK|NAVER\(inapp|Instagram|FBAN|FBAV|Line\/|DaumApps|everytimeApp/i.test(ua);
     var play = document.getElementById("android").href;
+    var appStore = document.getElementById("ios").href;
     var query = location.search.replace(/^\?/, "");
-    var open = document.getElementById("open");
-    // 카카오톡 같은 앱 안 브라우저는 유니버설 링크·앱 링크로 앱을 열지 않는다 → 직접 연다
-    if (ios) {
-      open.href = "banchin://r?" + query;
-      open.classList.remove("hide");
-      document.getElementById("ios").classList.remove("hide");
-    } else if (android) {
-      open.href = "intent://r?" + query + "#Intent;scheme=banchin;package=com.seungbin.banchin;S.browser_fallback_url=" + encodeURIComponent(play) + ";end";
-      open.classList.remove("hide");
-      document.getElementById("android").classList.remove("hide");
+    var scheme = "banchin://r?" + query;
+    var go = document.getElementById("go");
+    function tryApp() {
+      // 앱이 열리면 이 페이지가 가려진다 → 스토어로 가지 않는다
+      var timer = setTimeout(function () { if (!document.hidden) location.href = appStore; }, 1500);
+      document.addEventListener("visibilitychange", function () { if (document.hidden) clearTimeout(timer); });
+      location.href = scheme;
+    }
+    if (android) {
+      // 안드로이드: 앱이 있으면 앱, 없으면 browser_fallback_url(Play)로 — 인텐트 하나로 끝난다
+      go.href = "intent://r?" + query + "#Intent;scheme=banchin;package=com.seungbin.banchin;S.browser_fallback_url=" + encodeURIComponent(play) + ";end";
+    } else if (ios && inApp) {
+      go.addEventListener("click", function (e) { e.preventDefault(); tryApp(); });
+    } else if (ios) {
+      // 사파리: 앱이 있었다면 유니버설 링크가 이미 앱을 열었다 → 여기 있으면 거의 없는 것 → App Store
+      go.href = appStore;
+      var have = document.getElementById("have");
+      document.getElementById("have-link").href = scheme;
+      have.classList.remove("hide");
     } else {
+      go.classList.add("hide");
       document.getElementById("ios").classList.remove("hide");
       document.getElementById("android").classList.remove("hide");
-      document.getElementById("hint").textContent = "휴대폰에서 받아 주세요.";
+      document.getElementById("pc").classList.remove("hide");
     }
   })();
 </script>
