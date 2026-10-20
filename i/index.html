@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>같이 놀자! · 반짝 친구들</title>
+<meta name="description" content="잠든 별을 지키는 귀여운 협동 게임, 반짝 친구들. 인터넷 없이 옆에서 같이 놀아요.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="같이 놀자! · 반짝 친구들">
+<meta property="og:description" content="잠든 별을 지키는 귀여운 협동 게임. 인터넷 없이 옆에서 같이 놀아요.">
+<meta property="og:image" content="https://banchin.edureserve.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* 친구에게 알려 주기 링크 안내 페이지 — 기기에 맞는 스토어로 (앱이 있으면 스토어에 "열기"가 나온다) */
+  .hero { width: 100%; max-width: 420px; display: block; margin: 0 auto; border-radius: 22px; }
+  .card { background: var(--card); border-radius: 22px; padding: 22px 20px; margin: 18px 0; text-align: center; }
+  .lead { font-size: 1.5em; font-weight: 800; margin: 4px 0 10px; }
+  .sub { color: var(--muted); margin: 0; }
+  .btn { display: block; margin: 12px auto; max-width: 360px; padding: 15px 18px; border-radius: 999px; color: #fff; font-weight: 700; text-decoration: none; font-size: 1.08em; }
+  .btn.app { background: var(--pink); }
+  .btn.ios { background: #6f5bd6; }
+  .btn.android { background: #3f9d78; }
+  .hide { display: none; }
+  h1 { text-align: center; }
+</style>
+</head>
+<body>
+<main>
+<h1><span id="logo"><span class="b">반</span>짝 <span class="b">친</span><span class="r">구들</span></span><small id="sub">친구가 같이 놀자고 해요</small></h1>
+<img class="hero" id="hero" src="../img/og.png" alt="반짝 친구들의 여섯 친구: 토끼, 양, 강아지, 고양이, 햄스터, 펭귄">
+
+<div class="card">
+  <p class="lead" id="lead">같이 잠든 별을 지켜요!</p>
+  <p class="sub" id="ask">인터넷 없이 옆에서 같이 놀 수 있어요.</p>
+  <!-- 휴대폰이면 그 기기의 스토어로 (아래 스크립트) -->
+  <a class="btn app" id="go" href="#">받으러 가기</a>
+  <!-- 컴퓨터에서 열었을 때만 -->
+  <a class="btn ios hide" id="ios" href="https://apps.apple.com/app/id6824316058">App Store</a>
+  <a class="btn android hide" id="android" href="https://play.google.com/store/apps/details?id=com.seungbin.banchin&amp;referrer=utm_source%3Dinvite%26utm_medium%3Dshare%26utm_campaign%3Dapp">Google Play</a>
+  <p class="muted hide" id="pc">휴대폰에서 이 링크를 열어 주세요.</p>
+</div>
+
+<section>
+<p id="about">잠든 별을 지키는 귀여운 협동 게임이에요. 길을 따라 오는 장난꾸러기들을 반짝 빛으로 정화해 친구로 만들어요. 혼자(AI 친구와) 놀거나, 같은 방 친구와 인터넷 없이 같이 놀 수 있어요. iPhone과 안드로이드끼리도 돼요. 광고와 채팅은 없어요.</p>
+<p class="muted" id="about-en">A cute co-op game about keeping a sleeping star safe. Your friend wants to play together!</p>
+</section>
+<p class="muted"><a href="../" id="support">지원</a> · <a href="../privacy.html" id="privacy">개인정보 처리방침</a></p>
+</main>
+<script>
+  // 링크에는 아무 정보도 없다. 글은 브라우저 언어로, 단추는 기기에 맞는 스토어로.
+  (function () {
+    // 게임과 같은 넷: 한국어·영어·일본어·번체, 그 밖은 영어. HTML 기본은 한국어
+    var nav = (navigator.language || "ko").toLowerCase();
+    var lang = /^ko/.test(nav) ? "ko" : /^ja/.test(nav) ? "ja" : /^zh/.test(nav) ? "zh" : "en";
+    var T = {
+      en: { title: "Let's play! · Sparkle Friends", logo: '<span class="b">S</span>parkle <span class="b">F</span><span class="r">riends</span>',
+            sub: "Your friend wants to play together", lead: "Let's protect the sleeping star together!", ask: "Play side by side, no internet needed.",
+            go: "Get the app", pc: "Please open this link on your phone.",
+            about: "A cute co-op game about protecting a sleeping star. Shine sparkling light on the pranksters walking along the roads and turn them into friends. Play alone with an AI buddy, or with a friend in the same room — no internet needed, iPhone and Android together. No ads, no chat.",
+            support: "Support", privacy: "Privacy Policy", alt: "The six Sparkle Friends: bunny, lamb, puppy, kitty, hamster and penguin" },
+      ja: { title: "いっしょに あそぼう！ · キラキラともだち", logo: '<span class="b">キラ</span>キラ<span class="b">とも</span><span class="r">だち</span>',
+            sub: "ともだちが いっしょに あそぼうって", lead: "いっしょに ねむる ほしを まもろう！", ask: "インターネット なしで となりで いっしょに あそべるよ。",
+            go: "アプリを もらう", pc: "スマホで このリンクを ひらいてね。",
+            about: "眠っている星を守る、かわいい協力ゲームです。道を歩いてくるいたずらっこたちをキラキラの光で照らして、ともだちにします。ひとりで(AIのともだちと)遊ぶことも、同じ部屋の友だちとインターネットなしで一緒に遊ぶこともできます。iPhoneとAndroidでも遊べます。広告やチャットはありません。",
+            support: "サポート", privacy: "プライバシーポリシー", alt: "キラキラともだちの 6にん: うさぎ、ひつじ、いぬ、ねこ、ハムスター、ペンギン" },
+      zh: { title: "一起來玩吧！ · 閃亮好朋友", logo: '<span class="b">閃</span>亮好朋<span class="b">友</span>',
+            sub: "朋友想和你一起玩", lead: "一起守護沉睡的星星！", ask: "不用網路，在旁邊就能一起玩。",
+            go: "下載 App", pc: "請用手機打開這個連結。",
+            about: "守護沉睡星星的可愛合作遊戲。用閃亮的光照亮沿著道路走來的搗蛋鬼，把他們變成好朋友。可以自己玩（和 AI 朋友一起），也可以和同一個房間的朋友不用網路一起玩，iPhone 和 Android 也能一起玩。沒有廣告，也沒有聊天。",
+            support: "支援", privacy: "隱私權政策", alt: "閃亮好朋友的六位朋友：兔子、綿羊、小狗、小貓、倉鼠和企鵝" }
+    }[lang];
+    if (T) {
+      document.documentElement.lang = lang === "zh" ? "zh-Hant" : lang;
+      document.title = T.title;
+      document.getElementById("logo").innerHTML = T.logo; // 고정 글만
+      ["sub", "lead", "ask", "go", "pc", "about", "support", "privacy"].forEach(function (id) {
+        document.getElementById(id).textContent = T[id];
+      });
+      document.getElementById("hero").alt = T.alt;
+      document.getElementById("about-en").classList.add("hide");
+    }
+    // 기기는 브라우저가 알려 주는 User-Agent로 안다
+    var ua = navigator.userAgent || "";
+    var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    var android = /Android/.test(ua);
+    var go = document.getElementById("go");
+    if (ios) {
+      go.href = document.getElementById("ios").href;
+    } else if (android) {
+      go.href = document.getElementById("android").href;
+    } else {
+      go.classList.add("hide");
+      document.getElementById("ios").classList.remove("hide");
+      document.getElementById("android").classList.remove("hide");
+      document.getElementById("pc").classList.remove("hide");
+    }
+  })();
+</script>
+</body>
+</html>
